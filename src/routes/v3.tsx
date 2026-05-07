@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Mountain, Compass, Tent, MapPin, Wind } from "lucide-react";
+import logoImg from "@/assets/rmym-logo.png";
 
 export const Route = createFileRoute("/v3")({
   head: () => ({
