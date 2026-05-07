@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import Logo from "./Logo";
 
 const links = [
   { href: "#events", label: "Events" },
@@ -26,8 +27,8 @@ export default function Navbar() {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#" className="font-display text-2xl font-bold tracking-tight text-primary">
-          RMYM
+        <a href="#" className="flex items-center">
+          <Logo height={44} />
         </a>
         <div className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
