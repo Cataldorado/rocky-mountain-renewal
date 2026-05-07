@@ -34,8 +34,8 @@ export default function Footer() {
             <h4 className="text-xs font-semibold uppercase tracking-widest text-white/60">Contact</h4>
             <ul className="mt-4 space-y-3 text-sm text-white/85">
               <li className="flex items-start gap-2"><MapPin size={16} className="mt-0.5 shrink-0" /> Denver, Colorado</li>
-              <li className="flex items-center gap-2"><Mail size={16} /> office@rmym.org</li>
-              <li className="flex items-center gap-2"><Phone size={16} /> (303) 555-0142</li>
+            <li className="flex items-center gap-2"><Mail size={16} /><span>office@rmym.org</span></li>
+            <li className="flex items-center gap-2"><Phone size={16} /><span>(303) 555-0142</span></li>
             </ul>
           </div>
         </div>
