@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Heart, Hand, Sun, Leaf, Coffee, Users, ArrowRight, MapPin } from "lucide-react";
+import logoImg from "@/assets/rmym-logo.png";
 
 export const Route = createFileRoute("/v4")({
   head: () => ({
@@ -46,16 +47,9 @@ function V4() {
       <header className="relative z-10">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
           <a href="#" className="flex items-center gap-3">
-            <div
-              className="flex h-12 w-12 items-center justify-center rounded-full text-white"
-              style={{ backgroundColor: clay }}
-            >
-              <Sun size={22} />
-            </div>
-            <div className="leading-tight">
-              <div style={display} className="text-xl font-bold">Rocky Mountain</div>
-              <div style={hand} className="-mt-1 text-xl" >yearly meeting</div>
-            </div>
+            <span className="inline-flex items-center rounded-xl bg-white px-3 py-2 shadow-sm" style={{ border: `1px solid ${ink}` }}>
+              <img src={logoImg} alt="RMYM" style={{ height: 44 }} className="w-auto object-contain" />
+            </span>
           </a>
           <nav className="hidden items-center gap-7 text-sm font-semibold md:flex">
             {["Gathering", "Churches", "Mission", "Stories"].map((l) => (
