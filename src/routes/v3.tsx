@@ -29,10 +29,9 @@ function V3() {
       {/* Top bar */}
       <header className="absolute left-0 right-0 top-0 z-30">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <div className="flex items-center gap-2">
-            <Mountain size={22} className="text-[#e8d34c]" />
-            <span style={display} className="text-2xl tracking-wider">RMYM</span>
-          </div>
+          <span className="inline-flex items-center rounded-md bg-white px-3 py-1.5 shadow-sm">
+            <img src={logoImg} alt="RMYM" style={{ height: 40 }} className="w-auto object-contain" />
+          </span>
           <nav style={cond} className="hidden items-center gap-8 text-sm uppercase tracking-[0.18em] md:flex">
             {["Trips", "Churches", "Mission", "Field Notes"].map((l) => (
               <a key={l} href="#" className="text-white/85 hover:text-[#e8d34c]">{l}</a>
