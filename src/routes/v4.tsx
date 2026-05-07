@@ -76,7 +76,7 @@ function V4() {
       <section className="relative z-10">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
           <div>
-            <p style={hand} className="text-3xl" style={{ ...hand, color: clay }}>
+            <p className="text-3xl" style={{ ...hand, color: clay }}>
               welcome, friend —
             </p>
             <h1 style={display} className="mt-2 text-6xl font-bold leading-[1] md:text-7xl">
@@ -134,7 +134,7 @@ function V4() {
               className="absolute -bottom-4 -left-4 rotate-[-8deg] rounded-2xl px-4 py-3 text-center shadow-xl"
               style={{ backgroundColor: paper, border: `2px solid ${ink}` }}
             >
-              <p style={hand} className="text-2xl leading-none" style={{ ...hand, color: clay }}>made with love</p>
+              <p className="text-2xl leading-none" style={{ ...hand, color: clay }}>made with love</p>
               <p className="mt-1 text-[10px] font-bold uppercase tracking-widest">since 1957</p>
             </div>
           </div>
@@ -145,7 +145,7 @@ function V4() {
       <section className="relative z-10 py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center">
-            <p style={hand} className="text-3xl" style={{ ...hand, color: moss }}>three little words —</p>
+            <p className="text-3xl" style={{ ...hand, color: moss }}>three little words —</p>
             <h2 style={display} className="text-5xl font-bold">What we're about</h2>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -187,7 +187,7 @@ function V4() {
             <div className="absolute -top-5 left-10 rotate-[-4deg] rounded-md px-3 py-1 text-xs font-bold uppercase tracking-widest text-white" style={{ backgroundColor: clay }}>
               You're invited
             </div>
-            <p style={hand} className="text-3xl" style={{ ...hand, color: clay }}>July 13–18, 2026</p>
+            <p className="text-3xl" style={{ ...hand, color: clay }}>July 13–18, 2026</p>
             <h2 style={display} className="mt-2 text-5xl font-bold leading-tight md:text-6xl">
               Come up the mountain with us.
             </h2>
@@ -202,7 +202,7 @@ function V4() {
               >
                 Save my spot <ArrowRight size={16} />
               </a>
-              <span style={hand} className="text-2xl" style={{ ...hand, color: ink }}>
+              <span className="text-2xl" style={{ ...hand, color: ink }}>
                 or just come and see —
               </span>
             </div>
@@ -216,7 +216,7 @@ function V4() {
       <section className="relative z-10 py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-10 flex flex-col items-center gap-2 text-center">
-            <p style={hand} className="text-3xl" style={{ ...hand, color: sky }}>nineteen front porches —</p>
+            <p className="text-3xl" style={{ ...hand, color: sky }}>nineteen front porches —</p>
             <h2 style={display} className="text-5xl font-bold">Our little congregations</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
@@ -235,7 +235,7 @@ function V4() {
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl text-white" style={{ backgroundColor: color }}>
                     <Icon size={22} />
                   </div>
-                  <span style={display} className="text-5xl font-bold" style={{ ...display, color }}>{n}</span>
+                  <span className="text-5xl font-bold" style={{ ...display, color }}>{n}</span>
                 </div>
                 <h3 style={display} className="mt-4 text-2xl font-bold">{state}</h3>
                 <p className="mt-1 text-sm" style={{ color: "#5b3f30" }}>{blurb}</p>
@@ -254,7 +254,7 @@ function V4() {
           <div className="grid gap-8 md:grid-cols-3">
             <div>
               <div style={display} className="text-2xl font-bold">Rocky Mountain Yearly Meeting</div>
-              <p style={hand} className="mt-1 text-2xl" style={{ ...hand, color: "#e8b94c" }}>est. nineteen fifty-seven</p>
+              <p className="mt-1 text-2xl" style={{ ...hand, color: "#e8b94c" }}>est. nineteen fifty-seven</p>
               <p className="mt-4 text-sm opacity-80">A circle of Friends churches in CO, AZ &amp; NE.</p>
             </div>
             <div className="text-sm opacity-90">
