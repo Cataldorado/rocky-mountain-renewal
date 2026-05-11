@@ -1,4 +1,11 @@
 import { ArrowRight } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const events = [
   {
@@ -30,6 +37,20 @@ const events = [
     desc: "Representatives gather to discern the work and direction of our churches.",
     img: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=900&q=70",
   },
+  {
+    date: "Nov 14",
+    year: "2026",
+    title: "Pastors' Gathering",
+    desc: "A day of equipping and connection for pastors across the yearly meeting.",
+    img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=70",
+  },
+  {
+    date: "Dec 5",
+    year: "2026",
+    title: "Advent Worship Night",
+    desc: "Joining together in song and reflection as we prepare for Christmas.",
+    img: "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?auto=format&fit=crop&w=900&q=70",
+  },
 ];
 
 export default function Events() {
@@ -42,13 +63,26 @@ export default function Events() {
             <h2 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">Upcoming Events</h2>
           </div>
         </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {events.slice(0, 3).map((e) => (
-            <EventCard key={e.title} {...e} />
-          ))}
-        </div>
-        <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <EventCard {...events[3]} />
+
+        <Carousel opts={{ align: "start" }} className="w-full">
+          <CarouselContent className="-ml-6">
+            {events.map((e) => (
+              <CarouselItem key={e.title} className="pl-6 md:basis-1/2 lg:basis-1/3">
+                <EventCard {...e} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-0 -translate-x-1/2 md:-left-4" />
+          <CarouselNext className="right-0 translate-x-1/2 md:-right-4" />
+        </Carousel>
+
+        <div className="mt-10 text-center">
+          <a
+            href="#"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition hover:gap-2.5"
+          >
+            View All Events <ArrowRight size={16} />
+          </a>
         </div>
       </div>
     </section>
@@ -58,7 +92,7 @@ export default function Events() {
 function EventCard(props: (typeof events)[number]) {
   return (
     <article
-      className={`group flex flex-col overflow-hidden rounded-xl border bg-card shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)] fade-in-up ${
+      className={`group flex h-full flex-col overflow-hidden rounded-xl border bg-card shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)] fade-in-up ${
         props.featured ? "border-2 border-accent-green" : "border-border"
       }`}
     >
