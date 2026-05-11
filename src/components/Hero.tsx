@@ -17,7 +17,7 @@ export default function Hero() {
           Equip. Energize. Establish.
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-base text-white/90 sm:text-lg">
-          A family of Friends churches across Colorado, Arizona, and Nebraska — united in Christ, sent in mission.
+          RMYM exists to equip, energize, and establish Friends churches and ministries across the Rocky Mountain Region as we respond together to the Great Commission.
         </p>
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
