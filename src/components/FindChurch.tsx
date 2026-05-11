@@ -1,23 +1,130 @@
 import { useState } from "react";
-import { ArrowRight, MapPin, Map as MapIcon, LayoutGrid, Mountain, Users } from "lucide-react";
+import { ArrowRight, MapPin, Map as MapIcon, LayoutGrid, Users, Phone, Mail, Globe, Navigation, User } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+
+type Church = {
+  state: "CO" | "AZ" | "NE";
+  name: string;
+  city: string;
+  address: string;
+  phone: string;
+  email: string;
+  website: string;
+  pastor: string;
+  lat: number;
+  lng: number; // negative for western hemisphere
+  img: string;
+};
 
 const states = [
-  { code: "CO", name: "Colorado", count: 12, color: "var(--accent-green)" },
-  { code: "AZ", name: "Arizona", count: 4, color: "var(--secondary)" },
-  { code: "NE", name: "Nebraska", count: 3, color: "var(--primary)" },
+  { code: "CO" as const, name: "Colorado", count: 3, color: "var(--accent-green)" },
+  { code: "AZ" as const, name: "Arizona", count: 2, color: "var(--secondary)" },
+  { code: "NE" as const, name: "Nebraska", count: 1, color: "var(--primary)" },
 ];
 
-const churches = [
-  { state: "CO", name: "Denver Friends", city: "Denver, CO", img: "https://images.unsplash.com/photo-1545158535-c3f7168c28b6?auto=format&fit=crop&w=600&q=70" },
-  { state: "CO", name: "Rocky Mountain Friends", city: "Colorado Springs, CO", img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=70" },
-  { state: "CO", name: "Mountain View Friends", city: "Greeley, CO", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=70" },
-  { state: "AZ", name: "Phoenix First Friends", city: "Phoenix, AZ", img: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?auto=format&fit=crop&w=600&q=70" },
-  { state: "AZ", name: "East Valley Friends", city: "Mesa, AZ", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=70" },
-  { state: "NE", name: "Central City Friends", city: "Central City, NE", img: "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=600&q=70" },
+const churches: Church[] = [
+  {
+    state: "CO",
+    name: "Denver Friends Church",
+    city: "Denver, CO",
+    address: "3401 W 1st Ave, Denver, CO 80219",
+    phone: "(303) 555-0142",
+    email: "office@denverfriends.org",
+    website: "https://denverfriends.org",
+    pastor: "Pastor Mark Russell",
+    lat: 39.74,
+    lng: -104.99,
+    img: "https://images.unsplash.com/photo-1545158535-c3f7168c28b6?auto=format&fit=crop&w=600&q=70",
+  },
+  {
+    state: "CO",
+    name: "Rocky Mountain Friends",
+    city: "Colorado Springs, CO",
+    address: "1010 E Willamette Ave, Colorado Springs, CO 80903",
+    phone: "(719) 555-0188",
+    email: "hello@rmfriends.org",
+    website: "https://rmfriends.org",
+    pastor: "Pastor Sarah Linden",
+    lat: 38.83,
+    lng: -104.82,
+    img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=70",
+  },
+  {
+    state: "CO",
+    name: "Mountain View Friends",
+    city: "Greeley, CO",
+    address: "2425 23rd Ave, Greeley, CO 80634",
+    phone: "(970) 555-0173",
+    email: "info@mvfriends.org",
+    website: "https://mvfriends.org",
+    pastor: "Pastor David Chen",
+    lat: 40.42,
+    lng: -104.71,
+    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=70",
+  },
+  {
+    state: "AZ",
+    name: "Phoenix First Friends",
+    city: "Phoenix, AZ",
+    address: "1334 W Glendale Ave, Phoenix, AZ 85021",
+    phone: "(602) 555-0119",
+    email: "office@phxfriends.org",
+    website: "https://phxfriends.org",
+    pastor: "Pastor Luis Ramirez",
+    lat: 33.45,
+    lng: -112.07,
+    img: "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?auto=format&fit=crop&w=600&q=70",
+  },
+  {
+    state: "AZ",
+    name: "East Valley Friends",
+    city: "Mesa, AZ",
+    address: "2055 E Southern Ave, Mesa, AZ 85204",
+    phone: "(480) 555-0167",
+    email: "hello@evfriends.org",
+    website: "https://evfriends.org",
+    pastor: "Pastor Rebecca Knight",
+    lat: 33.42,
+    lng: -111.83,
+    img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=70",
+  },
+  {
+    state: "NE",
+    name: "Central City Friends",
+    city: "Central City, NE",
+    address: "1607 16th St, Central City, NE 68826",
+    phone: "(308) 555-0124",
+    email: "office@ccfriends.org",
+    website: "https://ccfriends.org",
+    pastor: "Pastor John Whitfield",
+    lat: 41.12,
+    lng: -98.0,
+    img: "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=600&q=70",
+  },
 ];
+
+// Projection bounds covering NE / CO / AZ region
+const LON_MAX_W = 114.8; // western edge (AZ west)
+const LON_MIN_W = 95.3; // eastern edge (NE east)
+const LAT_MAX = 43; // northern edge (NE north)
+const LAT_MIN = 31.3; // southern edge (AZ south)
+const VB_W = 600;
+const VB_H = 400;
+
+function project(lat: number, lng: number) {
+  const x = ((LON_MAX_W - Math.abs(lng)) / (LON_MAX_W - LON_MIN_W)) * VB_W;
+  const y = ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * VB_H;
+  return { x, y };
+}
 
 export default function FindChurch() {
-  const [view, setView] = useState<"topo" | "grid">("topo");
+  const [view, setView] = useState<"map" | "grid">("map");
 
   return (
     <section id="churches" className="bg-background py-20 md:py-28">
@@ -29,19 +136,18 @@ export default function FindChurch() {
               Find a Friends Church Near You
             </h2>
             <p className="mt-4 max-w-xl text-muted-foreground">
-              Nineteen congregations across the Rocky Mountain region — explore by region or browse our community.
+              Congregations across Colorado, Arizona, and Nebraska — click any pin to view details.
             </p>
           </div>
 
-          {/* Toggle */}
           <div className="inline-flex rounded-full border border-border bg-card p-1 shadow-[var(--shadow-card)]">
             <button
-              onClick={() => setView("topo")}
+              onClick={() => setView("map")}
               className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${
-                view === "topo" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                view === "map" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              <MapIcon size={16} /> Topographic
+              <MapIcon size={16} /> Map
             </button>
             <button
               onClick={() => setView("grid")}
@@ -54,99 +160,170 @@ export default function FindChurch() {
           </div>
         </div>
 
-        {view === "topo" ? <TopoView /> : <GridView />}
+        {view === "map" ? <MapView /> : <GridView />}
       </div>
     </section>
   );
 }
 
-function TopoView() {
+function MapView() {
+  const [selected, setSelected] = useState<Church | null>(null);
+
+  const stateColorFor = (code: Church["state"]) =>
+    code === "CO"
+      ? "oklch(0.55 0.16 138)"
+      : code === "AZ"
+        ? "oklch(0.45 0.13 140)"
+        : "oklch(0.39 0.13 252)";
+
   return (
-    <div className="grid items-center gap-12 lg:grid-cols-5 fade-in-up">
-      {/* Topographic map */}
+    <div className="grid items-start gap-8 lg:grid-cols-5 fade-in-up">
       <div className="lg:col-span-3">
-        <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-border bg-[oklch(0.97_0.02_85)] shadow-[var(--shadow-card-hover)]">
-          <svg viewBox="0 0 500 400" className="h-full w-full">
+        <div className="relative aspect-[3/2] overflow-hidden rounded-2xl border border-border bg-[oklch(0.97_0.02_85)] shadow-[var(--shadow-card-hover)]">
+          <svg viewBox={`0 0 ${VB_W} ${VB_H}`} className="h-full w-full">
             <defs>
-              <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="oklch(0.39 0.13 252)" stopOpacity="0.5" />
+              <radialGradient id="pin-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="oklch(0.39 0.13 252)" stopOpacity="0.45" />
                 <stop offset="100%" stopColor="oklch(0.39 0.13 252)" stopOpacity="0" />
               </radialGradient>
-              <linearGradient id="ridge" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="oklch(0.55 0.16 138 / 0.15)" />
-                <stop offset="100%" stopColor="oklch(0.45 0.13 140 / 0.05)" />
-              </linearGradient>
+              <pattern id="topo" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path
+                  d="M 0 30 Q 10 20, 20 25 T 40 22"
+                  fill="none"
+                  stroke="oklch(0.45 0.13 140 / 0.08)"
+                  strokeWidth="1"
+                />
+                <path
+                  d="M 0 12 Q 10 4, 20 8 T 40 6"
+                  fill="none"
+                  stroke="oklch(0.45 0.13 140 / 0.08)"
+                  strokeWidth="1"
+                />
+              </pattern>
             </defs>
 
-            {/* Topographic contour lines */}
-            <g stroke="oklch(0.45 0.13 140 / 0.18)" fill="none" strokeWidth="1">
-              {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-                <path
-                  key={i}
-                  d={`M ${20 + i * 8} ${380 - i * 12} Q ${150 + i * 5} ${280 - i * 18}, ${280 + i * 4} ${300 - i * 14} T ${480 - i * 6} ${260 - i * 10}`}
-                />
-              ))}
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <path
-                  key={`b-${i}`}
-                  d={`M ${10 + i * 6} ${100 + i * 14} Q ${180 + i * 8} ${60 + i * 18}, ${340 + i * 5} ${90 + i * 12} T ${490 - i * 4} ${130 + i * 10}`}
-                />
-              ))}
-            </g>
+            {/* Background topographic texture */}
+            <rect width={VB_W} height={VB_H} fill="url(#topo)" />
 
-            {/* Region fill */}
-            <rect width="500" height="400" fill="url(#ridge)" />
+            {/* Nebraska — approx rectangle with panhandle */}
+            <path
+              d="
+                M 331 0
+                L 600 0
+                L 600 102
+                L 459 102
+                L 459 102
+                L 331 102
+                Z
+              "
+              fill="oklch(0.39 0.13 252 / 0.08)"
+              stroke="oklch(0.39 0.13 252 / 0.6)"
+              strokeWidth="1.5"
+            />
 
-            {/* State outlines (geographic-ish dotted lines) */}
-            <g fill="none" strokeWidth="2" strokeDasharray="4 4">
-              {/* Nebraska */}
-              <path d="M 320 70 L 470 70 L 470 175 L 320 175 Z" stroke="oklch(0.39 0.13 252 / 0.6)" />
-              {/* Colorado */}
-              <path d="M 175 175 L 345 175 L 345 290 L 175 290 Z" stroke="oklch(0.45 0.13 140 / 0.7)" />
-              {/* Arizona */}
-              <path d="M 50 230 L 175 230 L 175 360 L 50 360 Z" stroke="oklch(0.55 0.16 138 / 0.7)" />
-            </g>
+            {/* Colorado — clean rectangle */}
+            <path
+              d="M 178 68 L 393 68 L 393 205 L 178 205 Z"
+              fill="oklch(0.55 0.16 138 / 0.10)"
+              stroke="oklch(0.55 0.16 138 / 0.7)"
+              strokeWidth="1.5"
+            />
 
-            {/* Mountain silhouettes */}
-            <g fill="oklch(0.45 0.13 140 / 0.35)">
-              <polygon points="195,260 220,200 245,250 270,180 295,260" />
-              <polygon points="80,330 105,280 125,310 150,270 170,330" />
+            {/* Arizona — rectangle with notch (top-right + SE corner approximation) */}
+            <path
+              d="
+                M 0 205
+                L 178 205
+                L 178 380
+                L 60 380
+                L 60 400
+                L 0 400
+                Z
+              "
+              fill="oklch(0.45 0.13 140 / 0.10)"
+              stroke="oklch(0.45 0.13 140 / 0.7)"
+              strokeWidth="1.5"
+            />
+
+            {/* Surrounding states (subtle) */}
+            <g fill="none" stroke="oklch(0.7 0.01 90)" strokeWidth="1" strokeDasharray="3 4">
+              {/* Wyoming above CO */}
+              <path d="M 178 0 L 393 0 L 393 68 L 178 68 Z" />
+              {/* Kansas right of CO */}
+              <path d="M 393 102 L 600 102 L 600 215 L 393 215 Z" />
+              {/* New Mexico below CO */}
+              <path d="M 178 205 L 393 205 L 393 360 L 178 360 Z" />
+              {/* Utah left of CO */}
+              <path d="M 0 68 L 178 68 L 178 205 L 0 205 Z" />
             </g>
 
             {/* State labels */}
-            <text x="395" y="125" textAnchor="middle" className="font-display fill-foreground text-lg font-bold">Nebraska</text>
-            <text x="260" y="240" textAnchor="middle" className="font-display fill-foreground text-xl font-bold">Colorado</text>
-            <text x="112" y="305" textAnchor="middle" className="font-display fill-foreground text-base font-bold">Arizona</text>
+            <text x="465" y="56" textAnchor="middle" className="font-display fill-foreground text-base font-bold">
+              NEBRASKA
+            </text>
+            <text x="285" y="140" textAnchor="middle" className="font-display fill-foreground text-base font-bold">
+              COLORADO
+            </text>
+            <text x="89" y="295" textAnchor="middle" className="font-display fill-foreground text-base font-bold">
+              ARIZONA
+            </text>
 
-            {/* Pin clusters with glow */}
-            {[
-              { x: 260, y: 215, label: 12 },
-              { x: 112, y: 290, label: 4 },
-              { x: 395, y: 110, label: 3 },
-            ].map((p, i) => (
-              <g key={i}>
-                <circle cx={p.x} cy={p.y} r="42" fill="url(#glow)" />
-                <circle cx={p.x} cy={p.y} r="18" fill="oklch(0.39 0.13 252)" stroke="white" strokeWidth="3" />
-                <text x={p.x} y={p.y + 5} textAnchor="middle" className="fill-white text-sm font-bold">{p.label}</text>
-              </g>
-            ))}
+            {/* Church pins */}
+            {churches.map((c) => {
+              const { x, y } = project(c.lat, c.lng);
+              const color = stateColorFor(c.state);
+              const isActive = selected?.name === c.name;
+              return (
+                <g
+                  key={c.name}
+                  className="cursor-pointer"
+                  onClick={() => setSelected(c)}
+                  role="button"
+                  aria-label={`${c.name} — ${c.city}`}
+                >
+                  <circle cx={x} cy={y} r={isActive ? 28 : 20} fill="url(#pin-glow)" />
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={isActive ? 11 : 8}
+                    fill={color}
+                    stroke="white"
+                    strokeWidth="2.5"
+                    className="transition-all"
+                  />
+                  <circle cx={x} cy={y} r="2.5" fill="white" />
+                </g>
+              );
+            })}
           </svg>
 
-          {/* Legend overlay */}
-          <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-background/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur">
-            <Mountain size={12} className="text-accent-green" /> 19 congregations · 3 states
+          {/* Legend */}
+          <div className="absolute bottom-3 left-3 flex flex-wrap items-center gap-3 rounded-lg bg-background/90 px-3 py-2 text-[11px] font-medium text-muted-foreground shadow-sm backdrop-blur">
+            {states.map((s) => (
+              <span key={s.code} className="flex items-center gap-1.5">
+                <span
+                  className="inline-block h-2.5 w-2.5 rounded-full ring-2 ring-white"
+                  style={{ backgroundColor: s.color }}
+                />
+                {s.name}
+              </span>
+            ))}
+          </div>
+
+          {/* Hint */}
+          <div className="absolute right-3 top-3 rounded-full bg-background/90 px-3 py-1 text-[11px] font-semibold text-muted-foreground shadow-sm backdrop-blur">
+            Click a pin for church details
           </div>
         </div>
       </div>
 
-      {/* State list */}
+      {/* State summary list */}
       <div className="lg:col-span-2">
         <div className="space-y-3">
           {states.map((s) => (
-            <a
+            <div
               key={s.code}
-              href="#"
-              className="group flex items-center justify-between rounded-xl border border-border bg-card px-5 py-4 transition hover:-translate-y-0.5 hover:border-primary hover:shadow-[var(--shadow-card-hover)]"
+              className="flex items-center justify-between rounded-xl border border-border bg-card px-5 py-4 shadow-[var(--shadow-card)]"
             >
               <div className="flex items-center gap-4">
                 <div
@@ -157,25 +334,106 @@ function TopoView() {
                 </div>
                 <div>
                   <div className="font-semibold text-foreground">{s.name}</div>
-                  <div className="text-xs text-muted-foreground">{s.count} churches</div>
+                  <div className="text-xs text-muted-foreground">{s.count} {s.count === 1 ? "church" : "churches"}</div>
                 </div>
               </div>
-              <ArrowRight size={18} className="text-muted-foreground transition group-hover:translate-x-1 group-hover:text-primary" />
-            </a>
+            </div>
           ))}
         </div>
         <a href="#" className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-2.5">
           View all churches <ArrowRight size={16} />
         </a>
       </div>
+
+      <ChurchDialog church={selected} onClose={() => setSelected(null)} />
     </div>
+  );
+}
+
+function ChurchDialog({ church, onClose }: { church: Church | null; onClose: () => void }) {
+  const directionsUrl = church
+    ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(church.address)}`
+    : "#";
+
+  return (
+    <Dialog open={!!church} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-lg overflow-hidden p-0">
+        {church && (
+          <>
+            <div className="relative h-44 w-full">
+              <img src={church.img} alt={church.name} className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-3 left-5 right-5 text-white">
+                <div className="text-[11px] font-bold uppercase tracking-wider opacity-90">{church.state}</div>
+                <DialogTitle className="font-display text-2xl font-semibold leading-tight">
+                  {church.name}
+                </DialogTitle>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <DialogHeader className="sr-only">
+                <DialogDescription>Church contact details</DialogDescription>
+              </DialogHeader>
+
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-start gap-3">
+                  <User size={16} className="mt-0.5 shrink-0 text-accent-green" />
+                  <span><span className="text-muted-foreground">Pastor: </span><span className="font-medium text-foreground">{church.pastor}</span></span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <MapPin size={16} className="mt-0.5 shrink-0 text-accent-green" />
+                  <span className="text-foreground">{church.address}</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Phone size={16} className="mt-0.5 shrink-0 text-accent-green" />
+                  <a href={`tel:${church.phone.replace(/[^0-9+]/g, "")}`} className="text-foreground hover:text-primary">
+                    {church.phone}
+                  </a>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Mail size={16} className="mt-0.5 shrink-0 text-accent-green" />
+                  <a href={`mailto:${church.email}`} className="text-foreground hover:text-primary">
+                    {church.email}
+                  </a>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Globe size={16} className="mt-0.5 shrink-0 text-accent-green" />
+                  <a href={church.website} target="_blank" rel="noreferrer" className="text-foreground hover:text-primary">
+                    {church.website.replace(/^https?:\/\//, "")}
+                  </a>
+                </li>
+              </ul>
+
+              <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+                <a
+                  href={church.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow transition hover:bg-primary-light"
+                >
+                  <Globe size={16} /> Visit Website
+                </a>
+                <a
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-primary hover:text-primary"
+                >
+                  <Navigation size={16} /> Get Directions
+                </a>
+              </div>
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
 
 function GridView() {
   return (
     <div className="fade-in-up">
-      {/* Stat row */}
       <div className="mb-8 grid grid-cols-3 gap-4">
         {states.map((s) => (
           <div
@@ -196,7 +454,6 @@ function GridView() {
         ))}
       </div>
 
-      {/* Photo mosaic */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {churches.map((c, i) => {
           const stateColor = states.find((s) => s.code === c.state)?.color;
@@ -231,15 +488,6 @@ function GridView() {
             </a>
           );
         })}
-      </div>
-
-      <div className="mt-8 text-center">
-        <a
-          href="#"
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-light"
-        >
-          View all 19 churches <ArrowRight size={16} />
-        </a>
       </div>
     </div>
   );
