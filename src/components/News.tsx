@@ -29,7 +29,7 @@ export default function News() {
     <section className="bg-muted py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-accent-green">Stay Connected</p>
-        <h2 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">News & Letters to the Churches</h2>
+        <h2 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">RMYM News & Letters to the Churches</h2>
 
         <article className="mt-12 grid overflow-hidden rounded-xl border border-border bg-card shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)] md:grid-cols-2">
           <div className="h-64 md:h-auto">
