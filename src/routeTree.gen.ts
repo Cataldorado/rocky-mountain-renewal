@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as V4RouteImport } from './routes/v4'
 import { Route as V3RouteImport } from './routes/v3'
 import { Route as V2RouteImport } from './routes/v2'
+import { Route as EventsRouteImport } from './routes/events'
 import { Route as ChurchesRouteImport } from './routes/churches'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -30,6 +31,11 @@ const V2Route = V2RouteImport.update({
   path: '/v2',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChurchesRoute = ChurchesRouteImport.update({
   id: '/churches',
   path: '/churches',
@@ -44,6 +50,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/churches': typeof ChurchesRoute
+  '/events': typeof EventsRoute
   '/v2': typeof V2Route
   '/v3': typeof V3Route
   '/v4': typeof V4Route
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/churches': typeof ChurchesRoute
+  '/events': typeof EventsRoute
   '/v2': typeof V2Route
   '/v3': typeof V3Route
   '/v4': typeof V4Route
@@ -59,21 +67,23 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/churches': typeof ChurchesRoute
+  '/events': typeof EventsRoute
   '/v2': typeof V2Route
   '/v3': typeof V3Route
   '/v4': typeof V4Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/churches' | '/v2' | '/v3' | '/v4'
+  fullPaths: '/' | '/churches' | '/events' | '/v2' | '/v3' | '/v4'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/churches' | '/v2' | '/v3' | '/v4'
-  id: '__root__' | '/' | '/churches' | '/v2' | '/v3' | '/v4'
+  to: '/' | '/churches' | '/events' | '/v2' | '/v3' | '/v4'
+  id: '__root__' | '/' | '/churches' | '/events' | '/v2' | '/v3' | '/v4'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChurchesRoute: typeof ChurchesRoute
+  EventsRoute: typeof EventsRoute
   V2Route: typeof V2Route
   V3Route: typeof V3Route
   V4Route: typeof V4Route
@@ -102,6 +112,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof V2RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/churches': {
       id: '/churches'
       path: '/churches'
@@ -122,6 +139,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChurchesRoute: ChurchesRoute,
+  EventsRoute: EventsRoute,
   V2Route: V2Route,
   V3Route: V3Route,
   V4Route: V4Route,
