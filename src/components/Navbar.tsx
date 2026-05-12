@@ -5,7 +5,7 @@ import Logo from "./Logo";
 const links = [
   { href: "/events", label: "Events" },
   { href: "/churches", label: "Churches" },
-  { href: "/#missions", label: "Missions" },
+  { href: "/missions", label: "Missions" },
   { href: "/#about", label: "About" },
 ];
 
