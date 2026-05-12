@@ -22,13 +22,13 @@ type Church = {
   img: string;
 };
 
-const states = [
-  { code: "CO" as const, name: "Colorado", count: 3, color: "var(--accent-green)" },
-  { code: "AZ" as const, name: "Arizona", count: 2, color: "var(--secondary)" },
+export const states = [
+  { code: "CO" as const, name: "Colorado", count: 9, color: "var(--accent-green)" },
+  { code: "AZ" as const, name: "Arizona", count: 4, color: "var(--secondary)" },
   { code: "NE" as const, name: "Nebraska", count: 1, color: "var(--primary)" },
 ];
 
-const churches: Church[] = [
+export const churches: Church[] = [
   {
     state: "CO",
     name: "Denver Friends Church",
