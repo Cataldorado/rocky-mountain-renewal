@@ -8,7 +8,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
-type Church = {
+export type Church = {
   state: "CO" | "AZ" | "NE";
   name: string;
   city: string;
