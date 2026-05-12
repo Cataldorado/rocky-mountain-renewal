@@ -272,7 +272,7 @@ export default function FindChurch() {
   );
 }
 
-function MapView() {
+export function MapView() {
   const [selected, setSelected] = useState<Church | null>(null);
 
   const stateColorFor = (code: Church["state"]) =>
