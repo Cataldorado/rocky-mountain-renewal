@@ -78,7 +78,7 @@ export default function Events() {
 
         <div className="mt-10 text-center">
           <a
-            href="#"
+            href="/events"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition hover:gap-2.5"
           >
             View All Events <ArrowRight size={16} />
