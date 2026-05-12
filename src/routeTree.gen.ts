@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as V4RouteImport } from './routes/v4'
 import { Route as V3RouteImport } from './routes/v3'
 import { Route as V2RouteImport } from './routes/v2'
+import { Route as ChurchesRouteImport } from './routes/churches'
 import { Route as IndexRouteImport } from './routes/index'
 
 const V4Route = V4RouteImport.update({
@@ -29,6 +30,11 @@ const V2Route = V2RouteImport.update({
   path: '/v2',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChurchesRoute = ChurchesRouteImport.update({
+  id: '/churches',
+  path: '/churches',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/churches': typeof ChurchesRoute
   '/v2': typeof V2Route
   '/v3': typeof V3Route
   '/v4': typeof V4Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/churches': typeof ChurchesRoute
   '/v2': typeof V2Route
   '/v3': typeof V3Route
   '/v4': typeof V4Route
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/churches': typeof ChurchesRoute
   '/v2': typeof V2Route
   '/v3': typeof V3Route
   '/v4': typeof V4Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/v2' | '/v3' | '/v4'
+  fullPaths: '/' | '/churches' | '/v2' | '/v3' | '/v4'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/v2' | '/v3' | '/v4'
-  id: '__root__' | '/' | '/v2' | '/v3' | '/v4'
+  to: '/' | '/churches' | '/v2' | '/v3' | '/v4'
+  id: '__root__' | '/' | '/churches' | '/v2' | '/v3' | '/v4'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChurchesRoute: typeof ChurchesRoute
   V2Route: typeof V2Route
   V3Route: typeof V3Route
   V4Route: typeof V4Route
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof V2RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/churches': {
+      id: '/churches'
+      path: '/churches'
+      fullPath: '/churches'
+      preLoaderRoute: typeof ChurchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChurchesRoute: ChurchesRoute,
   V2Route: V2Route,
   V3Route: V3Route,
   V4Route: V4Route,
