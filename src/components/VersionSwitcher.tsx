@@ -1,10 +1,10 @@
 import { Link, useLocation } from "@tanstack/react-router";
 
 const versions = [
-  { to: "/", label: "V1", name: "Classic" },
-  { to: "/v2", label: "V2", name: "Editorial" },
-  { to: "/v3", label: "V3", name: "Adventure" },
-  { to: "/v4", label: "V4", name: "Handcrafted" },
+  { to: "/", label: "V1", name: "Signature" },
+  { to: "/v2", label: "V2", name: "Broadsheet" },
+  { to: "/v3", label: "V3", name: "Summit" },
+  { to: "/v4", label: "V4", name: "Hearth" },
 ] as const;
 
 export default function VersionSwitcher() {
