@@ -71,7 +71,10 @@ function V2() {
       `}</style>
       <Navbar />
       <main>
-        <Hero />
+        <Hero
+          image="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1920&q=80"
+          alt="Open Bible on a wooden table"
+        />
         <Events />
         <MissionBanner />
         <News />

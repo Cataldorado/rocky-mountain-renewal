@@ -69,7 +69,10 @@ function V4() {
       `}</style>
       <Navbar />
       <main>
-        <Hero />
+        <Hero
+          image="https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1920&q=80"
+          alt="Warm candlelight in a sanctuary"
+        />
         <Events />
         <MissionBanner />
         <News />

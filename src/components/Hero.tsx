@@ -1,13 +1,22 @@
 import { ChevronDown } from "lucide-react";
 
-export default function Hero() {
+type HeroProps = {
+  image?: string;
+  alt?: string;
+};
+
+export default function Hero({
+  image = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80",
+  alt = "Rocky Mountain landscape",
+}: HeroProps = {}) {
   return (
     <section className="relative -mt-16 flex h-[90vh] min-h-[600px] w-full items-center justify-center overflow-hidden">
       <img
-        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80"
-        alt="Rocky Mountain landscape"
+        src={image}
+        alt={alt}
         className="absolute inset-0 h-full w-full object-cover"
       />
+
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center text-white fade-in-up">
         <p className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-white/85">

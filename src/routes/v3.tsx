@@ -76,7 +76,10 @@ function V3() {
       `}</style>
       <Navbar />
       <main>
-        <Hero />
+        <Hero
+          image="https://images.unsplash.com/photo-1493857671505-72967e2e2760?auto=format&fit=crop&w=1920&q=80"
+          alt="Cross silhouette against a mountain sunrise"
+        />
         <Events />
         <MissionBanner />
         <News />
