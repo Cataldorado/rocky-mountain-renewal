@@ -6,7 +6,7 @@ const links = [
   { href: "/events", label: "Events" },
   { href: "/churches", label: "Churches" },
   { href: "/missions", label: "Missions" },
-  { href: "/#about", label: "About" },
+  { href: "/about", label: "About" },
 ];
 
 export default function Navbar() {
