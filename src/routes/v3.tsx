@@ -7,6 +7,7 @@ import News from "@/components/News";
 import FindChurch from "@/components/FindChurch";
 import Missions from "@/components/Missions";
 import Footer from "@/components/Footer";
+import heroCrossSunrise from "@/assets/v3-hero-cross-sunrise.jpg";
 
 export const Route = createFileRoute("/v3")({
   head: () => ({
@@ -77,7 +78,7 @@ function V3() {
       <Navbar />
       <main>
         <Hero
-          image="https://images.unsplash.com/photo-1493857671505-72967e2e2760?auto=format&fit=crop&w=1920&q=80"
+          image={heroCrossSunrise}
           alt="Cross silhouette against a mountain sunrise"
         />
         <Events />
