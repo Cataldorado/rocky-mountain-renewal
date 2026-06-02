@@ -28,7 +28,7 @@ export default function MissionBanner() {
         </div>
         <div className="mt-14">
           <a
-            href="#about"
+            href="/about"
             className="inline-flex items-center justify-center rounded-md bg-white px-7 py-3 text-sm font-semibold text-primary shadow-lg transition hover:bg-white/90"
           >
             About RMYM
