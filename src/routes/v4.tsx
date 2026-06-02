@@ -7,6 +7,7 @@ import News from "@/components/News";
 import FindChurch from "@/components/FindChurch";
 import Missions from "@/components/Missions";
 import Footer from "@/components/Footer";
+import heroChapel from "@/assets/v4-hero-chapel.jpg";
 
 export const Route = createFileRoute("/v4")({
   head: () => ({
@@ -70,8 +71,8 @@ function V4() {
       <Navbar />
       <main>
         <Hero
-          image="https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1920&q=80"
-          alt="Warm candlelight in a sanctuary"
+          image={heroChapel}
+          alt="Sunlit chapel interior with stained glass windows"
         />
         <Events />
         <MissionBanner />
