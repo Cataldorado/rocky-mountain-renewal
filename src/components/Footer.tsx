@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-3">
           <div>
-            <Logo onDark height={56} />
+            <a href="/" aria-label="Go to home page" className="inline-block"><Logo onDark height={56} /></a>
             <p className="mt-3 text-sm text-white/70">
               Rocky Mountain Yearly Meeting — a family of evangelical Friends churches across Colorado, Arizona, and Nebraska.
             </p>
